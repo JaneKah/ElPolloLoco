@@ -4,7 +4,8 @@ class MovableObject {
     img;
     height = 150;
     width = 100;
-    imageCache = []; 
+    imageCache = {};
+    currentImage = 0;
 
     loadImage(path) {
         this.img = new Image();
@@ -17,10 +18,10 @@ class MovableObject {
      */
 
     loadImages(arr) {
-        arr.forEach(path => {
+        arr.forEach((path) => {
         let img = new Image();
         img.src = path;
-        imageCache[path] = path;
+        this.imageCache[path] = img;
     });
     }
 
