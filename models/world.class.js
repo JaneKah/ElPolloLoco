@@ -3,6 +3,7 @@ class World {
     enemies = level1.enemies;
     clouds = level1.clouds;
     backroundObjects = level1.backgroundObjects;
+    level = level1;
     ctx;
     canvas;
     keyboard;
@@ -29,6 +30,7 @@ class World {
 
 
         this.addObjectsToMap(this.backroundObjects);
+        
         this.addToMap(this.character);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
