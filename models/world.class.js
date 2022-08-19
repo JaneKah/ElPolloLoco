@@ -8,6 +8,8 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
+    statusBar = new Statusbar();
+    throwableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -15,30 +17,36 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollision();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollision() {
+    run() {
         setInterval(() => {
-            this.enemies.forEach((enemy) => {
-               if(this.character.isColliding(enemy) ) {
-                    this.character.hit();
-                    this.character.energy -= 5;
-                }
-            });
+         this.checkCollisions();
+         this.checkThrowObjects();
         }, 200);
     }
-/*
-    if (character.x + character.width > chicken.x &&
-        character.y + character.height > chicken.y &&
-        character.x < chicken.x &&
-        character.y < chicken.y + chicken.height
-        )
-*/
+
+    checkThrowObjects() {
+        if(this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions() {
+        this.enemies.forEach((enemy) => {
+            if(this.character.isColliding(enemy) ) {
+                 this.character.hit();
+                 this.statusBar.setPercentage(this.character.energy);
+             }
+         });
+    }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -50,11 +58,20 @@ class World {
 
         this.addObjectsToMap(this.backroundObjects);
 
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0);
+
+      
         this.addToMap(this.character);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.throwableObjects);
+    
+        
 
         this.ctx.translate(-this.camera_x, 0);
+        
 
 
         // draw() wird wieder immer aufgerufen
