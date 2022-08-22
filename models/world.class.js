@@ -1,6 +1,9 @@
 class World {
     character = new Character();
     enemies = level1.enemies;
+    coins = level1.coins;
+    hearts = level1.hearts;
+    bottles = level1.bottles;
     clouds = level1.clouds;
     backroundObjects = level1.backgroundObjects;
     level = level1;
@@ -9,7 +12,13 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new Statusbar();
+    gameOver = new GameOver();
+    coinBar = new CoinBar();
+    endbossBar = new EndbossBar();
+    bottleBar = new BottleBar();
     throwableObjects = [];
+    coin_sound = new Audio('audio/coins_sound.mp3');
+    heartbeat_sound = new Audio('audio/heartbeat_sound.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -45,6 +54,33 @@ class World {
                  this.statusBar.setPercentage(this.character.energy);
              }
          });
+         this.coins.forEach((coin) => {
+            if(this.character.isColliding(coin) ) {
+                this.character.hitByCoins();
+                this.coinBar.setPercentage(this.character.coinStatus);
+                this.coin_sound.play();
+                let coinAmount = this.level.coins.indexOf(coin);
+                this.level.coins.splice(coinAmount, 1);
+             }
+         });
+         this.hearts.forEach((heart) => {
+            if(this.character.isColliding(heart) ) {
+                this.character.hitByHeart();
+                this.statusBar.setPercentage(this.character.energy);
+                this.heartbeat_sound.play();
+                let heartAmount = this.level.hearts.indexOf(heart);
+                this.level.hearts.splice(heartAmount, 1);
+             }
+         });
+         this.bottles.forEach((bottle) => {
+            if(this.character.isColliding(bottle) ) {
+                this.character.hitByBottle();
+                this.statusBar.setPercentage(this.character.bottlesStatus);
+                
+                let heartAmount = this.level.hearts.indexOf(heart);
+                this.level.hearts.splice(heartAmount, 1);
+             }
+         });
     }
 
 
@@ -60,13 +96,15 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.endbossBar);
+        this.addToMap(this.bottleBar);
         this.ctx.translate(this.camera_x, 0);
 
-      
+       
         this.addToMap(this.character);
-        this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.throwableObjects);
+     
+        this.addDrawableObjectsToMap();
     
         
 
@@ -98,6 +136,15 @@ class World {
         if (mo.otherDirection) {
            this.flipImageBack(mo);
         }
+    }
+
+    addDrawableObjectsToMap() {
+        this.addObjectsToMap(this.clouds);
+        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.coins);
+        this.addObjectsToMap(this.hearts);
+        this.addObjectsToMap(this.bottles);
+        this.addObjectsToMap(this.throwableObjects);
     }
 
     flipImage(mo) {

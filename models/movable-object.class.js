@@ -4,7 +4,10 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    bottlesStatus = 0;
     lastHit = 0;
+    coinStatus = 0;
+  
 
     applyGravity() {
         setInterval(() => {
@@ -22,8 +25,6 @@ class MovableObject extends DrawableObject {
         return this.y < 150;
     }
     }
-
-  
 
     moveRight() {
         this.x += this.speed;
@@ -58,6 +59,27 @@ class MovableObject extends DrawableObject {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+        }
+    }
+
+    hitByCoins() {
+        this.coinStatus += 20;
+        if(this.coinStatus > 100) {
+            this.coinStatus == 100;
+        }
+    }
+
+    hitByHeart() {
+        this.energy += 20;
+        if(this.energy > 100) {
+            this.energy == 100;
+        }
+    }
+
+    hitByBottle() {
+        this.bottleStatus += 20;
+        if(this.bottleStatus > 100) {
+            this.bottleStatus == 100;
         }
     }
 
