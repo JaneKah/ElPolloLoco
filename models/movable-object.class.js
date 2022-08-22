@@ -4,9 +4,9 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
-    bottlesStatus = 0;
     lastHit = 0;
     coinStatus = 0;
+    bottlesStatus = 0;
   
 
     applyGravity() {
@@ -77,11 +77,19 @@ class MovableObject extends DrawableObject {
     }
 
     hitByBottle() {
-        this.bottleStatus += 20;
-        if(this.bottleStatus > 100) {
-            this.bottleStatus == 100;
+        this.bottlesStatus += 20;
+        if(this.bottlesStatus > 100) {
+            this.bottlesStatus == 100;
         }
     }
+
+    decreaseBottleStatus() {
+        this.bottlesStatus -= 20;
+        if(this.bottlesStatus < 0) {
+            this.bottlesStatus = 0;
+        }
+    }
+   
 
     isDead() {
         return this.energy == 0;

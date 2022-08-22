@@ -19,6 +19,7 @@ class World {
     throwableObjects = [];
     coin_sound = new Audio('audio/coins_sound.mp3');
     heartbeat_sound = new Audio('audio/heartbeat_sound.mp3');
+    bottle_clinking = new Audio('audio/bottle_clinking.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -44,8 +45,11 @@ class World {
         if(this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.character.decreaseBottleStatus();
+            this.bottleBar.setPercentage(this.character.bottlesStatus);
         }
     }
+
 
     checkCollisions() {
         this.enemies.forEach((enemy) => {
@@ -74,14 +78,18 @@ class World {
          });
          this.bottles.forEach((bottle) => {
             if(this.character.isColliding(bottle) ) {
-                this.character.hitByBottle();
-                this.statusBar.setPercentage(this.character.bottlesStatus);
-                
-                let heartAmount = this.level.hearts.indexOf(heart);
-                this.level.hearts.splice(heartAmount, 1);
+                this.character.hitByBottle(); //if hit by bottle, bottle status will be increased
+                this.bottleBar.setPercentage(this.character.bottlesStatus);
+                this.bottle_clinking.play();
+                let bottleAmount = this.level.bottles.indexOf(bottle);
+                this.level.bottles.splice(bottleAmount, 1);
              }
          });
     }
+
+
+
+  
 
 
     draw() {

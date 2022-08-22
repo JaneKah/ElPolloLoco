@@ -24,15 +24,18 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
+   
+
     throw() {
         this.speedY = 30;
         this.applyGravity();
         this.smashed_bottle_sound.play();
-
         setInterval(() => {
             this.x += 10;
         }, 25);
     }
+
+
 
     animate() {       
         setInterval(() => {
