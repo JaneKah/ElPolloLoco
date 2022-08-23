@@ -8,12 +8,14 @@ class Chicken extends MovableObject {
     ];
 
     IMAGE_DEAD = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png'];
-
+    IMAGE_DYING = new Image();
+    isHit = false;
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImage(this.IMAGE_DEAD);
+        this.IMAGE_DYING.src = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
 
         this.x = 300 + Math.random() * 1500; // Number between 200 and 250;
         
@@ -25,18 +27,17 @@ class Chicken extends MovableObject {
 
     animate() {
         setInterval(() => {
+            if(this.isAlive) {
             this.moveLeft();
+        }
         }, 1000 / 60);
        
         setInterval(() => {
+            if(this.isAlive){
            this.playAnimation(this.IMAGES_WALKING);
+            }
         }, 200);
 
-        setInterval(() => {
-            if(this.hitChicken()) {
-            this.playAnimation(this.IMAGE_DEAD);
-            }
-         }, 200);
     }
 
 }

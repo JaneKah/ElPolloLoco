@@ -26,12 +26,24 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
-        this.speedY = 30;
+        let turnedAround;
+        this.speedY = 20;
         this.applyGravity();
         this.smashed_bottle_sound.play();
+
+        if (world.character.otherDirection) {
+            turnedAround = true;
+        }
+
         setInterval(() => {
-            this.x += 10;
-        }, 25);
+            if (this.isAboveGround()) {
+                if (!turnedAround) {
+                    this.x += 10;
+                } else {
+                    this.x -= 10;
+                }
+            }
+        }, 1000 / 50);
     }
 
 
@@ -39,7 +51,7 @@ class ThrowableObject extends MovableObject {
     animate() {       
         setInterval(() => {
            this.playAnimation(this.BOTTLE_IMAGES);
-        }, 100);
+        }, 120);
     }
 
 }

@@ -9,6 +9,7 @@ class MovableObject extends DrawableObject {
     bottlesStatus = 0;
     energyEndboss = 100;
     energyChicken = 0;
+    isAlive = true;
   
 
     applyGravity() {

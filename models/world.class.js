@@ -40,9 +40,9 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.checkChickenHit();
             this.checkCollisionWithEndboss();
             this.checkIsEndbossNear();
-            this.checkChickenHit();
         }, 200);
     }
 
@@ -58,7 +58,7 @@ class World {
 
     checkCollisions() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && enemy.isAlive) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -107,14 +107,41 @@ class World {
 
 
     checkIsEndbossNear() {
-        this.level.enemies.forEach(enemy => {
-            if (this.character.isNear(enemy, 80, 80) && enemy instanceof Endboss) {
+            if (this.character(this.endBoss, 80, 80)) {
                 enemy.isNear = true;
             }
+    }
+
+    checkChickenHit() {
+      /*  for (let i = 0; i < this.throwableObjects.length; i++) {
+            const bottle = this.throwableObjects[i];
+        
+            this.level.enemies.forEach((chicken) => {
+                if (chicken.isColliding(bottle)) {
+                    if (e instanceof Chicken || e instanceof Chick) {
+                        this.killEnemy(chicken);
+                    }
+                }
+            })
+        }*/
+        this.enemies.forEach((enemy) =>{
+        if (this.character.isColliding(enemy) && this.character.speedY < 0) {
+            if (enemy instanceof Chicken || enemy instanceof Chick) {
+                this.killEnemy(enemy);
+                console.log('Enemy is killed', enemy)
+            }
+        }
         })
     }
 
+    killEnemy(enemy) {
+        enemy.isHit = true;
+        enemy.isAlive = false; 
 
+        if (enemy instanceof Chicken || enemy instanceof Chick) {
+            enemy.img = enemy.IMAGE_DYING;
+        } 
+    }
 
     draw() {
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
