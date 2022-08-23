@@ -8,7 +8,7 @@ class Chick extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ]
 
-    IMAGE_CHICK_DEAD = [
+    IMAGE_DEAD = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ]
 
@@ -18,7 +18,7 @@ class Chick extends MovableObject {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_CHICK_WALKING);
-        this.loadImage(this.IMAGE_CHICK_DEAD);
+        this.loadImage(this.IMAGE_DEAD);
 
         this.x = 300 + Math.random() * 1500; // Number between 200 and 400;
         

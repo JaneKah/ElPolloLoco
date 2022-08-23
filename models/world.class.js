@@ -12,6 +12,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new Statusbar();
+    endBoss = new Endboss();
     gameOver = new GameOver();
     coinBar = new CoinBar();
     endbossBar = new EndbossBar();
@@ -38,6 +39,7 @@ class World {
         setInterval(() => {
          this.checkCollisions();
          this.checkThrowObjects();
+         this.checkCollisionWithEndboss();
         }, 200);
     }
 
@@ -87,8 +89,18 @@ class World {
          });
     }
 
+    checkCollisionWithEndboss() {
+        this.throwableObjects.forEach((object) => {
+            if (this.endBoss.isColliding(object)) {
+                this.decreaseHealthOfEndboss();
+            }
+        });
+    }
 
-
+    decreaseHealthOfEndboss() {
+        this.endBoss.hitEndboss();
+        this.endbossBar.setPercentage(this.endBoss.energyEndboss);
+    }
   
 
 

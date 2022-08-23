@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     coinStatus = 0;
     bottlesStatus = 0;
+    energyEndboss = 100;
   
 
     applyGravity() {
@@ -62,6 +63,15 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    hitEndboss() {
+        this.energyEndboss -= 20;
+        if(this.energyEndboss < 0) {
+            this.energyEndboss = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
     hitByCoins() {
         this.coinStatus += 20;
         if(this.coinStatus > 100) {
@@ -93,6 +103,10 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
+    }
+
+    endBossIsDead() {
+        return this.energyEndboss == 0;
     }
 
     isHurt(){
