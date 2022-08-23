@@ -8,6 +8,7 @@ class MovableObject extends DrawableObject {
     coinStatus = 0;
     bottlesStatus = 0;
     energyEndboss = 100;
+    energyChicken = 0;
   
 
     applyGravity() {
@@ -64,13 +65,18 @@ class MovableObject extends DrawableObject {
     }
 
     hitEndboss() {
-        this.energyEndboss -= 20;
+        this.energyEndboss -= 5;
         if(this.energyEndboss < 0) {
             this.energyEndboss = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
     }
+
+    hitChicken() {
+        this.energyChicken == 0;
+     }
+     
 
     hitByCoins() {
         this.coinStatus += 20;

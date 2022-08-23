@@ -31,6 +31,12 @@ class Chicken extends MovableObject {
         setInterval(() => {
            this.playAnimation(this.IMAGES_WALKING);
         }, 200);
+
+        setInterval(() => {
+            if(this.hitChicken()) {
+            this.playAnimation(this.IMAGE_DEAD);
+            }
+         }, 200);
     }
 
 }

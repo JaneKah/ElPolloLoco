@@ -24,7 +24,6 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
-   
 
     throw() {
         this.speedY = 30;
