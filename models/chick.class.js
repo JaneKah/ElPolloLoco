@@ -10,6 +10,8 @@ class Chick extends MovableObject {
 
     IMAGE_DEAD = new Image();
     isHit = false;
+    chickIntervalMovingLeft;
+    chickIntervalWalking;
    
 
 
@@ -27,13 +29,13 @@ class Chick extends MovableObject {
 
 
     animate() {
-        setInterval(() => {
+       this.chickIntervalMovingLeft = setInterval(() => {
             if(this.isAlive){
             this.moveLeft();
         }
         }, 1000 / 60);
        
-        setInterval(() => {
+       this.chickIntervalWalking = setInterval(() => {
             if(this.isAlive){
            this.playAnimation(this.IMAGES_CHICK_WALKING);
             }

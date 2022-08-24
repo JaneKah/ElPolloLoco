@@ -68,6 +68,12 @@ const level1 = new Level(
         new Bottles(),
         new Bottles(),
         new Bottles(),
+        new Bottles(),
+        new Bottles(),
+        new Bottles(),
+        new Bottles(),
+        new Bottles(),
+        new Bottles(),
         new Bottles()
      ],
 
