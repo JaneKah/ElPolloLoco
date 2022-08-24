@@ -25,7 +25,8 @@ class World {
     heartbeat_sound = new Audio('audio/heartbeat_sound.mp3');
     bottle_clinking = new Audio('audio/bottle_clinking.mp3');
     chicken_sound = new Audio('audio/chicken_sound.mp3');
-    endboss_sound = new Audio('audio/endboss_sound.mp3')
+    endboss_sound = new Audio('audio/endboss_sound.mp3');
+    gameIsOver = false;
 
 
     constructor(canvas, keyboard) {
@@ -130,8 +131,8 @@ class World {
 
 
     checkIsEndbossNear() {
-        if (this.character.x > 2300) {
-            endBoss.isNear = true;
+        if (this.character.x > 2000) {
+            this.endBoss.isNear = true;
         }
     }
 
@@ -202,10 +203,24 @@ class World {
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
             this.clearAllIntervals();
+            this.gameIsOver = true;
+            this.reloadIfGameOver();
         } else if (this.endBoss.endBossIsDead()) {
             this.addToMap(this.gameOver);
             this.clearAllIntervals();
+            this.gameIsOver = true;
+            this.reloadIfGameOver();
         }
+    }
+
+    reloadIfGameOver() {
+        if(this.gameIsOver == true) {
+            document.getElementById('canvas').addEventListener("click", this.restartGame);
+        }
+    }
+    
+     restartGame() {
+        location.reload();
     }
 
     clearAllIntervals() {

@@ -13,6 +13,7 @@ body {
 
 canvas {
     background-color: black;
+    display: block;
 }
 
 .intro {
@@ -29,7 +30,6 @@ canvas {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     transition: all 225ms ease-in-out;
-    z-index: 99;
 }
 
 .start-info-container {
@@ -63,6 +63,16 @@ canvas {
     transition: all 400ms ease-in-out;
 }
 
+.keys-panel {
+    display: flex;
+    align-items: center;
+}
+
+.keys-panel img {
+    margin-right: 16px;
+    margin-left: 16px;
+}
+
 p {
     font-size: 18px;
 }
@@ -84,4 +94,17 @@ h1 {
 
 .d-none {
     display: none;
+}
+
+/* Smartphones */
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }

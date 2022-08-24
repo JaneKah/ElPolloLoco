@@ -54,7 +54,7 @@ endbossIntervalWalking;
     
     animate(){
         this.endbossIntervalWalking = setInterval(() => {
-            if (this.isNear = true) {
+            if (this.isNear == true) {
             this.moveLeft();
             }
         }, 1000 / 50);
@@ -62,12 +62,12 @@ endbossIntervalWalking;
  setInterval(() => {
             if(this.endBossIsDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isNear = true && !this.isHurt()) {
+            } else if (this.isNear == true && !this.isHurt()) {
             this.playAnimation(this.IMAGES_ATTACK_AND_WALKING);
             }
             else if(this.isHurt()){
                 this.playAnimation(this.IMAGES_HURT);
-            } else if(this.isNear = false && !this.isHurt()) {
+            } else if(this.isNear == false && !this.isHurt()) {
             this.playAnimation(this.IMAGES_ALERT);
         }
          }, 200);
