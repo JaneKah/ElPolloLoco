@@ -26,7 +26,7 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
-    IMAGES_ATTACK_AND_WALKING = [
+    IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
         'img/4_enemie_boss_chicken/3_attack/G15.png',
@@ -34,42 +34,64 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G17.png',
         'img/4_enemie_boss_chicken/3_attack/G18.png',
         'img/4_enemie_boss_chicken/3_attack/G19.png',
-        'img/4_enemie_boss_chicken/3_attack/G20.png',
+        'img/4_enemie_boss_chicken/3_attack/G20.png'
+
+    ];
+
+    IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
         'img/4_enemie_boss_chicken/1_walk/G3.png',
         'img/4_enemie_boss_chicken/1_walk/G4.png'
-    ];
-endbossIntervalWalking;
+    ]
+    endbossIntervalWalking;
+    endbossWalking = false;
 
-    constructor(){
+    constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_ATTACK_AND_WALKING);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_WALKING);
         this.x = 2400;
         this.animate();
     }
-    
-    animate(){
+
+    animate() {
         this.endbossIntervalWalking = setInterval(() => {
             if (this.isNear == true) {
-            this.moveLeft();
+                this.moveLeft();
             }
         }, 1000 / 50);
-        
- setInterval(() => {
-            if(this.endBossIsDead()) {
+
+        setInterval(() => {
+            if (this.endBossIsDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isNear == true && !this.isHurt()) {
-            this.playAnimation(this.IMAGES_ATTACK_AND_WALKING);
-            }
-            else if(this.isHurt()){
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if(this.isNear == false && !this.isHurt()) {
-            this.playAnimation(this.IMAGES_ALERT);
-        }
-         }, 200);
+            } else if (this.isNear == false && !this.isHurt()) {
+                this.playAnimation(this.IMAGES_ALERT);
+            }
+        }, 200);
+
+        let i = 0;
+        setInterval(() => {
+            if (this.isNear == true && !this.isHurt()) {
+                if (i < 8) {
+                    this.playAnimation(this.IMAGES_ATTACK);
+                } else {
+                    this.moveLeft();
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
+                i++;
+            }
+        }, 200);
+
     }
+    /*
+        else if (this.isNear == true && !this.isHurt()) {
+            this.playAnimationOfWalkingAndAttack();
+        }*/
+
 }

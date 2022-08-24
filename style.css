@@ -29,7 +29,7 @@ canvas {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    transition: all 225ms ease-in-out;
+    transition: all 300ms ease-in-out;
 }
 
 .start-info-container {
