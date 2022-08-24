@@ -5,11 +5,17 @@ let keyboard = new Keyboard();
 
 
 function init() {
+    removeIntroScreen();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 
     console.log('My character is', world.character)
 }
+
+function removeIntroScreen() {
+    document.getElementById('start-info-container').classList.add('d-none');
+}
+
 
 window.addEventListener('keydown', (e) => {
     if(e.keyCode == 39) {

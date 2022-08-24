@@ -6,8 +6,82 @@ body {
     height: 100vh;
     background-image: url('img/background.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 canvas {
     background-color: black;
+}
+
+.intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transition: all 225ms ease-in-out;
+    z-index: 99;
+}
+
+.start-info-container {
+    background-image: url('img/background_info.jpg');
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-height: 300px;
+    min-width: 550px;
+    max-width: 550px;
+    padding: 20px;
+    border-radius: 2em;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.start-button {
+    font-size: 24px;
+    margin: 20px 0 30px 0;
+    font-weight: 600;
+    background-color: #936219;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    cursor: pointer;
+    transition: all 400ms ease-in-out;
+}
+
+p {
+    font-size: 18px;
+}
+
+.start-button:hover {
+    background-color: #614111;
+    cursor: pointer;
+}
+
+@font-face {
+    font-family: 'zabras';
+    src: url('fonts/zabars.ttf') format('truetype')
+}
+
+h1 {
+    font-family: 'zabras';
+    font-size: 50px;
+}
+
+.d-none {
+    display: none;
 }
