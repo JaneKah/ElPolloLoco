@@ -41,7 +41,8 @@ class Character extends MovableObject {
     ];
 
     world;
-   
+    characterMovingInterval;
+    characterAnimationInterval;   
     level = level1;
     walking_sound = new Audio('audio/running.mp3');
     hurt_sound = new Audio('audio/hurt_sound.mp3');
@@ -58,7 +59,7 @@ class Character extends MovableObject {
 
     animate() {
 
-        setInterval(() => {
+        this.characterMovingInterval = setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                this.moveRight();
@@ -80,7 +81,7 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        setInterval(() => {
+       this.characterAnimationInterval = setInterval(() => {
 
             if(this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);

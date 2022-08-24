@@ -35,7 +35,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-
+        this.pushIntervalsToArray();
     }
 
     setWorld() {
@@ -51,6 +51,20 @@ class World {
             this.checkIsEndbossNear();
         }, 200);
     }
+
+    pushIntervalsToArray() {
+        this.intervals.push(this.runInterval);
+        this.intervals.push(this.character.characterMovingInterval);
+        this.intervals.push(this.character.characterAnimationInterval);
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            this.intervals.push(this.level.enemies[i].chickenIntervalMovingLeft);
+            this.intervals.push(this.level.enemies[i].chickenIntervalWalking);
+            this.intervals.push(this.level.enemies[i].chickIntervalMovingLeft);
+            this.intervals.push(this.level.enemies[i].chickIntervalWalking);
+            this.intervals.push(this.level.enemies[i].endbossIntervalWalking);
+            }
+    }
+
 
 
 
@@ -187,8 +201,16 @@ class World {
     checkGameOver() {
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
+            this.clearAllIntervals();
         } else if (this.endBoss.endBossIsDead()) {
             this.addToMap(this.gameOver);
+            this.clearAllIntervals();
+        }
+    }
+
+    clearAllIntervals() {
+        for (let i = 0; i < this.intervals.length; i++) {
+            clearInterval(this.intervals[i]);
         }
     }
 
