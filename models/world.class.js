@@ -21,6 +21,9 @@ class World {
     coin_sound = new Audio('audio/coins_sound.mp3');
     heartbeat_sound = new Audio('audio/heartbeat_sound.mp3');
     bottle_clinking = new Audio('audio/bottle_clinking.mp3');
+    chicken_sound = new Audio('audio/chicken_sound.mp3');
+    endboss_sound = new Audio('audio/endboss_sound.mp3')
+  
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -57,7 +60,7 @@ class World {
 
     checkCollisions() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.isAlive) {
+            if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.isAlive) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -95,6 +98,7 @@ class World {
         this.throwableObjects.forEach((object) => {
             if (this.endBoss.isColliding(object)) {
                 this.decreaseHealthOfEndboss();
+                this.endboss_sound.play();
             }
         });
     }
@@ -106,8 +110,8 @@ class World {
 
 
     checkIsEndbossNear() {
-            if (this.character(this.endBoss, 80, 80)) {
-                enemy.isNear = true;
+            if (this.character.x > 2300) {
+                endBoss.isNear = true;
             }
     }
 
@@ -125,7 +129,7 @@ class World {
         }
 
         this.enemies.forEach((enemy) =>{
-        if (this.character.isColliding(enemy) && this.character.speedY < 0) {
+        if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
             if (enemy instanceof Chicken || enemy instanceof Chick) {
                 this.killEnemy(enemy);
             }
@@ -139,14 +143,8 @@ class World {
 
         if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.img = enemy.IMAGE_DEAD;
+            this.chicken_sound.play();
         } 
-    }
-    
-
-    removeDeadEnemies(world) {
-        if (world.level.enemies) {
-            world.level.enemies = world.level.enemies.filter((e) => e.isAlive);
-        }
     }
 
     draw() {

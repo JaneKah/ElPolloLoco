@@ -4,6 +4,7 @@ class Level {
     clouds;
     hearts;
     bottles;
+    world;
     backgroundObjects;
     level_end_x = 2100;
 
