@@ -8,11 +8,7 @@ class Chick extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
     ];
 
-    IMAGE_DEAD = [
-        'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
-    ];
-
-    IMAGE_DYING = new Image();
+    IMAGE_DEAD = new Image();
     isHit = false;
    
 
@@ -20,8 +16,7 @@ class Chick extends MovableObject {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_CHICK_WALKING);
-        this.loadImage(this.IMAGE_DEAD);
-        this.IMAGE_DYING.src = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+        this.IMAGE_DEAD.src = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
 
         this.x = 300 + Math.random() * 1500; // Number between 200 and 400;
         

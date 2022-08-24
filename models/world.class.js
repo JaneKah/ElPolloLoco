@@ -12,7 +12,6 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new Statusbar();
-    chickens = this.level.enemies.find(e => e instanceof Chicken);
     endBoss = this.level.enemies.find(e => e instanceof Endboss);
     gameOver = new GameOver();
     coinBar = new CoinBar();
@@ -58,7 +57,7 @@ class World {
 
     checkCollisions() {
         this.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && enemy.isAlive) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.isAlive) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -113,22 +112,22 @@ class World {
     }
 
     checkChickenHit() {
-      /*  for (let i = 0; i < this.throwableObjects.length; i++) {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
             const bottle = this.throwableObjects[i];
         
-            this.level.enemies.forEach((chicken) => {
-                if (chicken.isColliding(bottle)) {
-                    if (e instanceof Chicken || e instanceof Chick) {
-                        this.killEnemy(chicken);
+            this.level.enemies.forEach((enemy) => {
+                if (enemy.isColliding(bottle)) {
+                    if (enemy instanceof Chicken || enemy instanceof Chick) {
+                        this.killEnemy(enemy);
                     }
                 }
             })
-        }*/
+        }
+
         this.enemies.forEach((enemy) =>{
         if (this.character.isColliding(enemy) && this.character.speedY < 0) {
             if (enemy instanceof Chicken || enemy instanceof Chick) {
                 this.killEnemy(enemy);
-                console.log('Enemy is killed', enemy)
             }
         }
         })
@@ -139,8 +138,15 @@ class World {
         enemy.isAlive = false; 
 
         if (enemy instanceof Chicken || enemy instanceof Chick) {
-            enemy.img = enemy.IMAGE_DYING;
+            enemy.img = enemy.IMAGE_DEAD;
         } 
+    }
+    
+
+    removeDeadEnemies(world) {
+        if (world.level.enemies) {
+            world.level.enemies = world.level.enemies.filter((e) => e.isAlive);
+        }
     }
 
     draw() {
