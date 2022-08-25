@@ -31,6 +31,7 @@
     <script src="levels/level1.js"></script>
     <script src="models/world.class.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/events.js"></script>
 </head>
 
 <body>
@@ -56,9 +57,18 @@
         <div class="sound-panel">
             <img onclick="muteSound()" id="volume" src="img/icons/volume.png" alt="">
         </div>
-        <canvas id="canvas" width="720" height="480">
+        <canvas id="canvas" width="720" height="480">        </canvas>
+        <div class="mobile-buttons-container">
+            <div class="mobile-buttons-left">
+                <img src="img/icons/left_key.png" id="left">
+                    <img src="img/icons/right_key.png" id="right">
+            </div>
+            <div class="mobile-buttons-right">
+                <img src="img/icons/up_key.png" id="space">
+                    <img src="img/icons/d_key.png" id="throw">
+            </div>
+        </div>
     </div>
-    </canvas>
 
 </body>
 
