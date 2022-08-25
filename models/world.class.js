@@ -16,18 +16,12 @@ class World {
     gameOver = new GameOver();
     youLost = new YouLost();
     coinBar = new CoinBar();
+    sounds = new Sounds();
     endbossBar = new EndbossBar();
     bottleBar = new BottleBar();
     throwableObjects = [];
     intervals = [];
     runInterval;
-    coin_sound = new Audio('audio/coins_sound.mp3');
-    heartbeat_sound = new Audio('audio/heartbeat_sound.mp3');
-    bottle_clinking = new Audio('audio/bottle_clinking.mp3');
-    chicken_sound = new Audio('audio/chicken_sound.mp3');
-    endboss_sound = new Audio('audio/endboss_sound.mp3');
-    lost_game_sound = new Audio('audio/lostgame.mp3');
-    won_game_sound = new Audio('audio/wongame.mp3')
     gameIsOver = false;
 
 
@@ -92,7 +86,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 this.character.hitByCoins();
                 this.coinBar.setPercentage(this.character.coinStatus);
-                this.coin_sound.play();
+                this.sounds.coin_sound.play();
                 let coinAmount = this.level.coins.indexOf(coin);
                 this.level.coins.splice(coinAmount, 1);
             }
@@ -101,7 +95,7 @@ class World {
             if (this.character.isColliding(heart)) {
                 this.character.hitByHeart();
                 this.statusBar.setPercentage(this.character.energy);
-                this.heartbeat_sound.play();
+                this.sounds.heartbeat_sound.play();
                 let heartAmount = this.level.hearts.indexOf(heart);
                 this.level.hearts.splice(heartAmount, 1);
             }
@@ -110,7 +104,7 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.character.hitByBottle(); //if hit by bottle, bottle status will be increased
                 this.bottleBar.setPercentage(this.character.bottlesStatus);
-                this.bottle_clinking.play();
+                this.sounds.bottle_clinking.play();
                 let bottleAmount = this.level.bottles.indexOf(bottle);
                 this.level.bottles.splice(bottleAmount, 1);
             }
@@ -121,7 +115,7 @@ class World {
         this.throwableObjects.forEach((object) => {
             if (this.endBoss.isColliding(object)) {
                 this.decreaseHealthOfEndboss();
-                this.endboss_sound.play();
+                this.sounds.endboss_sound.play();
             }
         });
     }
@@ -166,7 +160,7 @@ class World {
 
         if (enemy instanceof Chicken || enemy instanceof Chick) {
             enemy.img = enemy.IMAGE_DEAD;
-            this.chicken_sound.play();
+            this.sounds.chicken_sound.play();
         }
     }
 
@@ -196,7 +190,7 @@ class World {
 
         this.checkGameOver();
 
-        // draw() wird wieder immer aufgerufen
+        // draw() will be repeated
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -206,18 +200,20 @@ class World {
     checkGameOver() {
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
-            this.lost_game_sound.play();
+            this.sounds.lost_game_sound.play();
             this.clearAllIntervals();
             this.gameIsOver = true;
             this.reloadIfGameOver();
         } else if (this.endBoss.endBossIsDead()) {
             this.addToMap(this.gameOver);
-            this.won_game_sound.play();
+            this.sounds.won_game_sound.play();
             this.clearAllIntervals();
             this.gameIsOver = true;
             this.reloadIfGameOver();
         }
     }
+
+  
 
     reloadIfGameOver() {
         if (this.gameIsOver == true) {
@@ -234,6 +230,8 @@ class World {
             clearInterval(this.intervals[i]);
         }
     }
+
+
 
     addObjectsToMap(objects) {
         objects.forEach(o => {
@@ -273,5 +271,32 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+
+    muteSounds()  {
+        this.sounds.coin_sound.muted = true;
+        this.sounds.heartbeat_sound.muted = true;
+        this.sounds.bottle_clinking.muted = true;
+        this.sounds.chicken_sound.muted = true;
+        this.sounds.endboss_sound.muted = true;
+        this.sounds.lost_game_sound.muted = true;
+        this.sounds.won_game_sound.muted = true;
+        this.character.walking_sound.muted = true;
+        this.character.hurt_sound.muted = true;
+        this.character.hop_sound = true;
+    }
+
+    playSounds() {
+        this.sounds.coin_sound.muted = false;
+        this.sounds.heartbeat_sound.muted = false;
+        this.sounds.bottle_clinking.muted = false;
+        this.sounds.chicken_sound.muted = false;
+        this.sounds.endboss_sound.muted = false;
+        this.sounds.lost_game_sound.muted = false;
+        this.sounds.won_game_sound.muted = false;
+        this.character.walking_sound.muted = false;
+        this.character.hurt_sound.muted = false;
+        this.character.hop_sound = false;
     }
 }

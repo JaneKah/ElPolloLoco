@@ -89,9 +89,4 @@ class Endboss extends MovableObject {
         }, 200);
 
     }
-    /*
-        else if (this.isNear == true && !this.isHurt()) {
-            this.playAnimationOfWalkingAndAttack();
-        }*/
-
 }

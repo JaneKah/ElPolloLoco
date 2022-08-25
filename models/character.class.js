@@ -46,6 +46,7 @@ class Character extends MovableObject {
     level = level1;
     walking_sound = new Audio('audio/running.mp3');
     hurt_sound = new Audio('audio/hurt_sound.mp3');
+    hop_sound = new Audio('audio/hop_sound.mp3')
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png')

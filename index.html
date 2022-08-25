@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +19,7 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="models/level.class.js"></script>
     <script src="models/status-bar.class.js"></script>
+    <script src="models/sounds.class.js"></script>
     <script src="models/gameover.class.js"></script>
     <script src="models/youlost.class.js"></script>
     <script src="models/coin.class.js"></script>
@@ -49,9 +51,12 @@
             </div>
         </div>
     </div>
-    
+
     <div class="canvas-container">
-    <canvas id="canvas" width="720" height="480" >
+        <div class="sound-panel">
+            <img onclick="muteSound()" id="volume" src="img/icons/volume.png" alt="">
+        </div>
+        <canvas id="canvas" width="720" height="480">
     </div>
     </canvas>
 

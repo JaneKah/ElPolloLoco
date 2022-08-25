@@ -16,6 +16,17 @@ function removeIntroScreen() {
     document.getElementById('start-info-container').classList.add('d-none');
 }
 
+function muteSound() {
+    let sound = document.getElementById('volume');
+    if (sound.src.match('volume')) {
+    sound.src = 'img/icons/mute.png';
+    world.muteSounds();
+    } else {
+        sound.src = 'img/icons/volume.png';
+        world.playSounds();
+    }
+}
+
 
 window.addEventListener('keydown', (e) => {
     if(e.keyCode == 39) {

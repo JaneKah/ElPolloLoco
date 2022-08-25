@@ -10,8 +10,7 @@ class MovableObject extends DrawableObject {
     energyEndboss = 100;
     energyChicken = 0;
     isAlive = true;
-    hop_sound = new Audio('audio/hop_sound.mp3')
-  
+ 
 
     applyGravity() {
         setInterval(() => {

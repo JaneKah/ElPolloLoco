@@ -96,6 +96,17 @@ h1 {
     display: none;
 }
 
+.sound-panel {
+    background-color: #c88c32;
+    padding: 10px 10px 5px 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sound-panel img {
+    height: 24px;
+}
+
 /* Smartphones */
 @media only screen and (max-width: 720px) {
     canvas {
@@ -105,6 +116,36 @@ h1 {
 
 @media only screen and (max-height: 480px) {
     canvas {
-        height: 100vh;
+        width: 100vw;
     }
+
+@media only screen and (max-width: 420px) {
+    .keys-panel {
+        flex-direction: column;
+    }
+
+    .intro {
+        width: unset;
+    }
+
+    .start-info-container {
+        max-width: 350px;
+        min-width: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    .keys-panel {
+        flex-direction: column;
+    }
+
+    .intro {
+        width: unset;
+    }
+
+    .start-info-container {
+        max-width: 350px;
+        min-width: 350px;
+    }
+}
 }
