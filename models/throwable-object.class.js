@@ -23,9 +23,15 @@ class ThrowableObject extends MovableObject {
         this.throw();
         this.animate();
     }
+ /**
+     * 
+     * enables to throw a bottle
+     */
 
 
     throw() {
+        if(world) {
+
         let turnedAround;
         this.speedY = 20;
         this.applyGravity();
@@ -44,6 +50,7 @@ class ThrowableObject extends MovableObject {
                 }
             }
         }, 1000 / 50);
+    }
     }
 
 

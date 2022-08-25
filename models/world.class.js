@@ -1,11 +1,5 @@
 class World {
     character = new Character();
-    enemies = level1.enemies;
-    coins = level1.coins;
-    hearts = level1.hearts;
-    bottles = level1.bottles;
-    clouds = level1.clouds;
-    backroundObjects = level1.backgroundObjects;
     level = level1;
     ctx;
     canvas;
@@ -17,13 +11,13 @@ class World {
     youLost = new YouLost();
     coinBar = new CoinBar();
     sounds = new Sounds();
+    throwableObject = new ThrowableObject();
     endbossBar = new EndbossBar();
     bottleBar = new BottleBar();
     throwableObjects = [];
     intervals = [];
     runInterval;
     gameIsOver = false;
-
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -35,9 +29,20 @@ class World {
         this.pushIntervalsToArray();
     }
 
+ /**
+     * 
+     *  sets the world of the character to this world
+     */
+
     setWorld() {
         this.character.world = this;
     }
+
+    /**
+     * 
+     * checks all collision of character with objects
+     *  and enemies while running
+     */
 
     run() {
         this.runInterval = setInterval(() => {
@@ -48,6 +53,11 @@ class World {
             this.checkIsEndbossNear();
         }, 200);
     }
+
+    /**
+     * 
+     * pushes all set intervals into an array
+     */
 
     pushIntervalsToArray() {
         this.intervals.push(this.runInterval);
@@ -62,7 +72,11 @@ class World {
         }
     }
 
-
+      /**
+     * 
+     * checks if bottle is thrown, if yes, 
+     * it decreases status of bottlebar
+     */
 
 
     checkThrowObjects() {
@@ -74,33 +88,25 @@ class World {
         }
     }
 
+     /**
+     * 
+     * calls out all functions of collisions
+     */
 
     checkCollisions() {
-        this.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.isAlive) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        });
-        this.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                this.character.hitByCoins();
-                this.coinBar.setPercentage(this.character.coinStatus);
-                this.sounds.coin_sound.play();
-                let coinAmount = this.level.coins.indexOf(coin);
-                this.level.coins.splice(coinAmount, 1);
-            }
-        });
-        this.hearts.forEach((heart) => {
-            if (this.character.isColliding(heart)) {
-                this.character.hitByHeart();
-                this.statusBar.setPercentage(this.character.energy);
-                this.sounds.heartbeat_sound.play();
-                let heartAmount = this.level.hearts.indexOf(heart);
-                this.level.hearts.splice(heartAmount, 1);
-            }
-        });
-        this.bottles.forEach((bottle) => {
+        this.checkCollisionWithEnemies();
+        this.checkCollisionWithCoins();
+        this.checkCollisionWithHearts();
+        this.checkCollisionWithBottles();
+    }
+
+      /**
+     * 
+     * checks if bottles can be collected
+     */
+
+    checkCollisionWithBottles() {
+        this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.character.hitByBottle(); //if hit by bottle, bottle status will be increased
                 this.bottleBar.setPercentage(this.character.bottlesStatus);
@@ -111,6 +117,44 @@ class World {
         });
     }
 
+      /**
+     * 
+     * checks if hearts can be collected
+     */
+
+    checkCollisionWithHearts() {
+        this.level.hearts.forEach((heart) => {
+            if (this.character.isColliding(heart)) {
+                this.character.hitByHeart();
+                this.statusBar.setPercentage(this.character.energy);
+                this.sounds.heartbeat_sound.play();
+                let heartAmount = this.level.hearts.indexOf(heart);
+                this.level.hearts.splice(heartAmount, 1);
+            }
+        });
+    }
+
+      /**
+     * 
+     * checks if enemy is colliding with character, if yes
+     * it decreases the energy of the character
+     */
+
+    checkCollisionWithEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.isAlive) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+      /**
+     * 
+     * checks if bottle collids with endboss, if yes,
+     * it call the function out to decrease healthstatus of endboss
+     */
+
     checkCollisionWithEndboss() {
         this.throwableObjects.forEach((object) => {
             if (this.endBoss.isColliding(object)) {
@@ -120,17 +164,49 @@ class World {
         });
     }
 
+     /**
+     * 
+     * checks if coins can be collected
+     */
+
+    checkCollisionWithCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.character.hitByCoins();
+                this.coinBar.setPercentage(this.character.coinStatus);
+                this.sounds.coin_sound.play();
+                let coinAmount = this.level.coins.indexOf(coin);
+                this.level.coins.splice(coinAmount, 1);
+            }
+        });
+    }
+
+        /**
+     * 
+     * decreases status of healthbar of endboss
+     */
+
     decreaseHealthOfEndboss() {
         this.endBoss.hitEndboss();
         this.endbossBar.setPercentage(this.endBoss.energyEndboss);
     }
 
+        /**
+     * 
+     * checks if endboss is near the character
+     */
 
     checkIsEndbossNear() {
         if (this.character.x > 2000) {
             this.endBoss.isNear = true;
         }
     }
+
+     /**
+     * 
+     * checks if chicken is hit by bottle or the character, if yes
+     * it calls function out to kill enemy
+     */
 
     checkChickenHit() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
@@ -145,7 +221,7 @@ class World {
             })
         }
 
-        this.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 if (enemy instanceof Chicken || enemy instanceof Chick) {
                     this.killEnemy(enemy);
@@ -153,6 +229,12 @@ class World {
             }
         })
     }
+
+       /**
+     * 
+     * shows the dead picture of an enemy and adds sounds to enemy when killed
+     * @param {object} enemy 
+     */
 
     killEnemy(enemy) {
         enemy.isHit = true;
@@ -164,22 +246,21 @@ class World {
         }
     }
 
+      /**
+     * 
+     * draws all the elements on the canvas
+     */
+
     draw() {
+        this.addMobileButtons();
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
-
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-
-        this.addObjectsToMap(this.backroundObjects);
-
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
-        if (this.endBoss.isNear == true) {
-            this.addToMap(this.endbossBar);
-        }
+        
+       this.addStatusBars();
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
@@ -197,6 +278,42 @@ class World {
         });
     }
 
+    
+      /**
+     * 
+     * add status bars to the map
+     *
+     */
+
+    addStatusBars() {
+        this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
+        if (this.endBoss.isNear == true) {
+            this.addToMap(this.endbossBar);
+        }
+    }
+
+      /**
+     * 
+     * adds mobile buttons when inner width of window is under 1000
+     *
+     */
+
+    addMobileButtons() {
+        if (window.innerWidth < 1000) {
+            document.getElementById('mobile-buttons-container').classList.remove('d-none');
+          } else {
+            document.getElementById('mobile-buttons-container').classList.add('d-none');
+          }
+    }
+    
+     /**
+     * 
+     * checks if game is over
+     *
+     */
+
     checkGameOver() {
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
@@ -213,7 +330,11 @@ class World {
         }
     }
 
-  
+ /**
+     * 
+     * calls the function out to restart the game when there is onclick on canvas
+     *
+     */
 
     reloadIfGameOver() {
         if (this.gameIsOver == true) {
@@ -221,9 +342,21 @@ class World {
         }
     }
 
+     /**
+     * 
+     * reloads the page and comes back to intro
+     *
+     */
+
     restartGame() {
         location.reload();
     }
+
+    /**
+     * 
+     * clears all set intervals to stop the motion of all characters
+     *
+     */
 
     clearAllIntervals() {
         for (let i = 0; i < this.intervals.length; i++) {
@@ -231,13 +364,23 @@ class World {
         }
     }
 
-
+    /**
+     * 
+     * adds each object of an array to the canvas
+     * @param {Array} objects 
+     */
 
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
+
+     /**
+     * 
+     * adds a single object to the map
+     * @param {object} mo 
+     */
 
     addToMap(mo) {
         if (mo.otherDirection) {
@@ -252,15 +395,27 @@ class World {
         }
     }
 
+      /**
+     * 
+     * adds all objects from level1.js on the canvas
+     * 
+     */
+
     addDrawableObjectsToMap() {
-        this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.coins);
-        this.addObjectsToMap(this.hearts);
-        this.addObjectsToMap(this.bottles);
+       
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.hearts);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
     }
 
+      /**
+     * 
+     * flips the image to the left
+     * @param {object} mo 
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -268,13 +423,23 @@ class World {
         mo.x = mo.x * -1;
     }
 
+       /**
+     * 
+     * flips the image to the right
+     * @param {object} mo 
+     */
+
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+     /**
+     * 
+     * mute all sounds
+     */
 
-    muteSounds()  {
+    muteSounds() {
         this.sounds.coin_sound.muted = true;
         this.sounds.heartbeat_sound.muted = true;
         this.sounds.bottle_clinking.muted = true;
@@ -284,8 +449,14 @@ class World {
         this.sounds.won_game_sound.muted = true;
         this.character.walking_sound.muted = true;
         this.character.hurt_sound.muted = true;
-        this.character.hop_sound = true;
+        this.character.hop_sound.muted = true;
+        this.throwableObject.smashed_bottle_sound.muted = true;
     }
+
+     /**
+     * 
+     * play all sounds
+     */
 
     playSounds() {
         this.sounds.coin_sound.muted = false;
@@ -297,6 +468,7 @@ class World {
         this.sounds.won_game_sound.muted = false;
         this.character.walking_sound.muted = false;
         this.character.hurt_sound.muted = false;
-        this.character.hop_sound = false;
+        this.character.hop_sound.muted = false;
+        this.throwableObject.smashed_bottle_sound.muted = false;
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * Eventlistener for the keyboard, checks when key is pushed down
+ */
+
 window.addEventListener('keydown', (e) => {
     if(e.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -24,6 +28,9 @@ window.addEventListener('keydown', (e) => {
     }
 })
 
+/**
+ * Eventlistener for the keyboard, checks when key is up
+ */
 
 window.addEventListener('keyup', (e) => {
     if(e.keyCode == 39) {
@@ -52,7 +59,7 @@ window.addEventListener('keyup', (e) => {
 })
 
 /**
- * Touch events for the mobile version.
+ * Touch events for the mobile version, checks start of touch
  */
 
  window.addEventListener('touchstart', (e) => {
@@ -76,7 +83,7 @@ window.addEventListener('keyup', (e) => {
 
 
 /**
- * Touch events for the mobile version.
+ * Touch events for the mobile version, checks end of touch
  */
 
  window.addEventListener('touchend', (e) => {
@@ -96,3 +103,4 @@ window.addEventListener('keyup', (e) => {
         keyboard.D = false;
     }
 });
+

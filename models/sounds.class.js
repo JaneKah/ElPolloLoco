@@ -7,5 +7,4 @@ class Sounds {
     lost_game_sound = new Audio('audio/lostgame.mp3');
     won_game_sound = new Audio('audio/wongame.mp3')
 
-
 }

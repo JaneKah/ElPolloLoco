@@ -7,6 +7,13 @@ class DrawableObject {
     height = 150;
     width = 100;
 
+
+      /**
+     * 
+     * loads the first image
+     * @param {string} path 
+     */
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -27,10 +34,19 @@ class DrawableObject {
  
     }
  
-
+/**
+     * 
+     * draws the image
+     * @param {CanvasRenderingContext2D} ctx 
+     */
        draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
+
+     /**
+     * 
+     * draws a frame around an object
+     */
 
     drawFrame(ctx) {
 
