@@ -14,6 +14,7 @@ function init() {
 
 function removeIntroScreen() {
     document.getElementById('start-info-container').classList.add('d-none');
+    document.getElementById('canvas-container').classList.remove('d-none');
 }
 
 function muteSound() {
