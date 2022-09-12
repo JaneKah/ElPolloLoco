@@ -84,6 +84,7 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottlesStatus > 20) {
+            this.sounds.smashed_bottle_sound.pause();
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.sounds.smashed_bottle_sound.volume = 0.2;
@@ -92,6 +93,7 @@ class World {
             this.bottleBar.setPercentage(this.character.bottlesStatus);
         }
     }
+
 
     /**
     * 

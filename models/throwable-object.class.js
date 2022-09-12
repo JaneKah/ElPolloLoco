@@ -11,6 +11,7 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
+    smashed_bottle_sound = new Audio('audio/bottle_smash.mp3');
 
 
     constructor(x, y) {

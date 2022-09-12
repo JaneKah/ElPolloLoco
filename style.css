@@ -16,6 +16,7 @@ body {
 canvas {
     background-color: black;
     display: block;
+    position: relative;
 }
 
 .intro {
@@ -186,11 +187,11 @@ h1 {
     .canvas-container {
         height: 100vh;
     }
+}
+
 
 @media only screen and (max-width: 500px) {
        .mobile-buttons-container img {
         height: 30px;
        }
     }
-
-}
