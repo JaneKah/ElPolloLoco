@@ -19,6 +19,8 @@ class World {
     runInterval;
     gameIsOver = false;
 
+
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -29,10 +31,10 @@ class World {
         this.pushIntervalsToArray();
     }
 
- /**
-     * 
-     *  sets the world of the character to this world
-     */
+    /**
+        * 
+        *  sets the world of the character to this world
+        */
 
     setWorld() {
         this.character.world = this;
@@ -51,6 +53,7 @@ class World {
             this.checkChickenHit();
             this.checkCollisionWithEndboss();
             this.checkIsEndbossNear();
+            this.sounds.changeSoundsVolume();
         }, 200);
     }
 
@@ -72,26 +75,28 @@ class World {
         }
     }
 
-      /**
-     * 
-     * checks if bottle is thrown, if yes, 
-     * it decreases status of bottlebar
-     */
+    /**
+   * 
+   * checks if bottle is thrown, if yes, 
+   * it decreases status of bottlebar
+   */
 
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottlesStatus > 20) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.sounds.smashed_bottle_sound.volume = 0.2;
+            this.sounds.smashed_bottle_sound.play();
             this.character.decreaseBottleStatus();
             this.bottleBar.setPercentage(this.character.bottlesStatus);
         }
     }
 
-     /**
-     * 
-     * calls out all functions of collisions
-     */
+    /**
+    * 
+    * calls out all functions of collisions
+    */
 
     checkCollisions() {
         this.checkCollisionWithEnemies();
@@ -100,15 +105,15 @@ class World {
         this.checkCollisionWithBottles();
     }
 
-      /**
-     * 
-     * checks if bottles can be collected
-     */
+    /**
+   * 
+   * checks if bottles can be collected
+   */
 
     checkCollisionWithBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.character.hitByBottle(); //if hit by bottle, bottle status will be increased
+                this.character.collectedBottle(); //if hit by bottle, bottle status will be increased
                 this.bottleBar.setPercentage(this.character.bottlesStatus);
                 this.sounds.bottle_clinking.play();
                 let bottleAmount = this.level.bottles.indexOf(bottle);
@@ -117,15 +122,15 @@ class World {
         });
     }
 
-      /**
-     * 
-     * checks if hearts can be collected
-     */
+    /**
+   * 
+   * checks if hearts can be collected
+   */
 
     checkCollisionWithHearts() {
         this.level.hearts.forEach((heart) => {
             if (this.character.isColliding(heart)) {
-                this.character.hitByHeart();
+                this.character.collectedHeart();
                 this.statusBar.setPercentage(this.character.energy);
                 this.sounds.heartbeat_sound.play();
                 let heartAmount = this.level.hearts.indexOf(heart);
@@ -134,11 +139,11 @@ class World {
         });
     }
 
-      /**
-     * 
-     * checks if enemy is colliding with character, if yes
-     * it decreases the energy of the character
-     */
+    /**
+   * 
+   * checks if enemy is colliding with character, if yes
+   * it decreases the energy of the character
+   */
 
     checkCollisionWithEnemies() {
         this.level.enemies.forEach((enemy) => {
@@ -149,11 +154,11 @@ class World {
         });
     }
 
-      /**
-     * 
-     * checks if bottle collids with endboss, if yes,
-     * it call the function out to decrease healthstatus of endboss
-     */
+    /**
+   * 
+   * checks if bottle collids with endboss, if yes,
+   * it call the function out to decrease healthstatus of endboss
+   */
 
     checkCollisionWithEndboss() {
         this.throwableObjects.forEach((object) => {
@@ -164,15 +169,15 @@ class World {
         });
     }
 
-     /**
-     * 
-     * checks if coins can be collected
-     */
+    /**
+    * 
+    * checks if coins can be collected
+    */
 
     checkCollisionWithCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
-                this.character.hitByCoins();
+                this.character.collectedCoins();
                 this.coinBar.setPercentage(this.character.coinStatus);
                 this.sounds.coin_sound.play();
                 let coinAmount = this.level.coins.indexOf(coin);
@@ -181,20 +186,20 @@ class World {
         });
     }
 
-        /**
-     * 
-     * decreases status of healthbar of endboss
-     */
+    /**
+ * 
+ * decreases status of healthbar of endboss
+ */
 
     decreaseHealthOfEndboss() {
-        this.endBoss.hitEndboss();
-        this.endbossBar.setPercentage(this.endBoss.energyEndboss);
+        this.endBoss.hit();
+        this.endbossBar.setPercentage(this.endBoss.energy);
     }
 
-        /**
-     * 
-     * checks if endboss is near the character
-     */
+    /**
+ * 
+ * checks if endboss is near the character
+ */
 
     checkIsEndbossNear() {
         if (this.character.x > 2000) {
@@ -202,11 +207,11 @@ class World {
         }
     }
 
-     /**
-     * 
-     * checks if chicken is hit by bottle or the character, if yes
-     * it calls function out to kill enemy
-     */
+    /**
+    * 
+    * checks if chicken is hit by bottle or the character, if yes
+    * it calls function out to kill enemy
+    */
 
     checkChickenHit() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
@@ -230,11 +235,11 @@ class World {
         })
     }
 
-       /**
-     * 
-     * shows the dead picture of an enemy and adds sounds to enemy when killed
-     * @param {object} enemy 
-     */
+    /**
+  * 
+  * shows the dead picture of an enemy and adds sounds to enemy when killed
+  * @param {object} enemy 
+  */
 
     killEnemy(enemy) {
         enemy.isHit = true;
@@ -246,10 +251,10 @@ class World {
         }
     }
 
-      /**
-     * 
-     * draws all the elements on the canvas
-     */
+    /**
+   * 
+   * draws all the elements on the canvas
+   */
 
     draw() {
         this.addMobileButtons();
@@ -259,8 +264,8 @@ class World {
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_x, 0);
-        
-       this.addStatusBars();
+
+        this.addStatusBars();
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
@@ -278,12 +283,12 @@ class World {
         });
     }
 
-    
-      /**
-     * 
-     * add status bars to the map
-     *
-     */
+
+    /**
+   * 
+   * add status bars to the map
+   *
+   */
 
     addStatusBars() {
         this.addToMap(this.statusBar);
@@ -294,47 +299,64 @@ class World {
         }
     }
 
-      /**
-     * 
-     * adds mobile buttons when inner width of window is under 1000
-     *
-     */
+    /**
+   * 
+   * adds mobile buttons when inner width of window is under 1000
+   *
+   */
 
     addMobileButtons() {
         if (window.innerWidth < 1000) {
             document.getElementById('mobile-buttons-container').classList.remove('d-none');
-          } else {
+        } else {
             document.getElementById('mobile-buttons-container').classList.add('d-none');
-          }
+        }
     }
-    
-     /**
-     * 
-     * checks if game is over
-     *
-     */
+
+    /**
+    * 
+    * checks if game is over
+    *
+    */
 
     checkGameOver() {
+
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
-            this.sounds.lost_game_sound.play();
+            this.playLostGameSound();
             this.clearAllIntervals();
             this.gameIsOver = true;
             this.reloadIfGameOver();
-        } else if (this.endBoss.endBossIsDead()) {
+        } else if (this.endBoss.isDead()) {
             this.addToMap(this.gameOver);
-            this.sounds.won_game_sound.play();
+            this.playWonGameSound();
             this.clearAllIntervals();
             this.gameIsOver = true;
             this.reloadIfGameOver();
         }
     }
 
- /**
-     * 
-     * calls the function out to restart the game when there is onclick on canvas
-     *
-     */
+    // play sound when game is lost
+
+    playLostGameSound() {
+        if (!this.gameIsOver) {
+            this.sounds.lost_game_sound.play();
+        }
+    }
+
+    // play sound when game is won
+
+    playWonGameSound() {
+        if (!this.gameIsOver) {
+            this.sounds.won_game_sound.play();
+        }
+    }
+
+    /**
+        * 
+        * calls the function out to restart the game when there is onclick on canvas
+        *
+        */
 
     reloadIfGameOver() {
         if (this.gameIsOver == true) {
@@ -342,11 +364,11 @@ class World {
         }
     }
 
-     /**
-     * 
-     * reloads the page and comes back to intro
-     *
-     */
+    /**
+    * 
+    * reloads the page and comes back to intro
+    *
+    */
 
     restartGame() {
         location.reload();
@@ -376,11 +398,11 @@ class World {
         });
     }
 
-     /**
-     * 
-     * adds a single object to the map
-     * @param {object} mo 
-     */
+    /**
+    * 
+    * adds a single object to the map
+    * @param {object} mo 
+    */
 
     addToMap(mo) {
         if (mo.otherDirection) {
@@ -395,14 +417,14 @@ class World {
         }
     }
 
-      /**
-     * 
-     * adds all objects from level1.js on the canvas
-     * 
-     */
+    /**
+   * 
+   * adds all objects from level1.js on the canvas
+   * 
+   */
 
     addDrawableObjectsToMap() {
-       
+
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
@@ -411,11 +433,11 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
     }
 
-      /**
-     * 
-     * flips the image to the left
-     * @param {object} mo 
-     */
+    /**
+   * 
+   * flips the image to the left
+   * @param {object} mo 
+   */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -423,52 +445,58 @@ class World {
         mo.x = mo.x * -1;
     }
 
-       /**
-     * 
-     * flips the image to the right
-     * @param {object} mo 
-     */
+    /**
+  * 
+  * flips the image to the right
+  * @param {object} mo 
+  */
 
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
-     /**
-     * 
-     * mute all sounds
-     */
+    /**
+    * 
+    * mute all sounds
+    */
 
     muteSounds() {
-        this.sounds.coin_sound.muted = true;
+
         this.sounds.heartbeat_sound.muted = true;
         this.sounds.bottle_clinking.muted = true;
         this.sounds.chicken_sound.muted = true;
         this.sounds.endboss_sound.muted = true;
         this.sounds.lost_game_sound.muted = true;
+        this.sounds.coin_sound.muted = true;
         this.sounds.won_game_sound.muted = true;
         this.character.walking_sound.muted = true;
         this.character.hurt_sound.muted = true;
         this.character.hop_sound.muted = true;
-        this.throwableObject.smashed_bottle_sound.muted = true;
+        this.sounds.smashed_bottle_sound.muted = true;
+
     }
 
-     /**
-     * 
-     * play all sounds
-     */
+    /**
+    * 
+    * play all sounds
+    */
 
     playSounds() {
+
         this.sounds.coin_sound.muted = false;
         this.sounds.heartbeat_sound.muted = false;
         this.sounds.bottle_clinking.muted = false;
         this.sounds.chicken_sound.muted = false;
+        this.sounds.coin_sound.muted = false;
         this.sounds.endboss_sound.muted = false;
         this.sounds.lost_game_sound.muted = false;
         this.sounds.won_game_sound.muted = false;
         this.character.walking_sound.muted = false;
         this.character.hurt_sound.muted = false;
         this.character.hop_sound.muted = false;
-        this.throwableObject.smashed_bottle_sound.muted = false;
+        this.sounds.smashed_bottle_sound.muted = false;
+
     }
+
 }
