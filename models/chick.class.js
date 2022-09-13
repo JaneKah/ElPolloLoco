@@ -22,6 +22,7 @@ class Chick extends MovableObject {
         this.animate();
     }
 
+    
     animate() {
         this.chickIntervalMovingLeft = setInterval(() => {
             if (this.isAlive) {

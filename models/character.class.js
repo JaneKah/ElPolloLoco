@@ -68,6 +68,7 @@ class Character extends MovableObject {
         }, 50);
     }
 
+
     makeCharacterWalk() {
         this.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -86,6 +87,7 @@ class Character extends MovableObject {
         }
         this.world.camera_x = -this.x + 100;
     }
+
 
     playAnimationOfCharacter() {
         if (this.isDead()) {
@@ -109,11 +111,11 @@ class Character extends MovableObject {
         this.speedY = 30;
     }
 
+
     /**
 * 
 * decreases status of bottles
 */
-
     decreaseBottleStatus() {
         this.bottlesStatus -= 7;
         if (this.bottlesStatus < 0) {
@@ -121,11 +123,11 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
 * 
 * increases status of coins
 */
-
     collectedCoins() {
         this.coinStatus += 20;
         if (this.coinStatus > 100) {
@@ -133,11 +135,11 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
    * 
    * increases status of hearts
    */
-
     collectedHeart() {
         this.energy += 20;
         if (this.energy > 100) {
@@ -145,11 +147,11 @@ class Character extends MovableObject {
         }
     }
 
+
     /**
    * 
    * increases status of bottles
    */
-
     collectedBottle() {
         this.bottlesStatus += 7;
         if (this.bottlesStatus > 100) {

@@ -23,6 +23,8 @@ class ThrowableObject extends MovableObject {
         this.throw();
         this.animate();
     }
+
+    
     /**
         * 
         * enables to throw a bottle
@@ -34,6 +36,7 @@ class ThrowableObject extends MovableObject {
             this.changeDirectionOfThrow();
         }
     }
+
 
     changeDirectionOfThrow() {
         let turnedAround;
@@ -50,6 +53,7 @@ class ThrowableObject extends MovableObject {
             }
         }, 1000 / 50);
     }
+
 
     animate() {
         setInterval(() => {

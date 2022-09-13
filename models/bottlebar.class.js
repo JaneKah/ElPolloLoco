@@ -19,12 +19,14 @@ class BottleBar extends DrawableObject {
         this.setPercentage(0);
     }
 
+
     // setPercentage(50);
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
+
 
     resolveImageIndex() {
         if (this.percentage > 100) {
@@ -41,5 +43,4 @@ class BottleBar extends DrawableObject {
             return 0;
         }
     }
-
 }

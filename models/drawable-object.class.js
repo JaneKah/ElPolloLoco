@@ -16,17 +16,16 @@ class DrawableObject {
    * loads the first image
    * @param {string} path 
    */
-
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+
     /**
    * 
    * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
    */
-
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -44,13 +43,12 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+
     /**
     * 
     * draws a frame around an object
     */
-
     drawFrame(ctx) {
-
         if (this instanceof Character || this instanceof Chicken) {
             ctx.beginPath();
             ctx.lineWidth = '5';

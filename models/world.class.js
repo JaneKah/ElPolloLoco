@@ -34,6 +34,7 @@ class World {
         this.character.world = this;
     }
 
+
     /**
      * checks all collision of character with objects
      *  and enemies while running
@@ -49,6 +50,7 @@ class World {
         }, 200);
     }
 
+
     // pushes all set intervals into an array
     pushIntervalsToArray() {
         this.intervals.push(this.runInterval);
@@ -62,6 +64,7 @@ class World {
             this.intervals.push(this.level.enemies[i].endbossIntervalWalking);
         }
     }
+
 
     /**
    * checks if bottle is thrown, if yes, 
@@ -79,6 +82,7 @@ class World {
         }
     }
 
+
     //calls out all functions of collisions
     checkCollisions() {
         this.checkCollisionWithEnemies();
@@ -86,6 +90,7 @@ class World {
         this.checkCollisionWithHearts();
         this.checkCollisionWithBottles();
     }
+
 
     // checks if bottles can be collected
     checkCollisionWithBottles() {
@@ -100,6 +105,7 @@ class World {
         });
     }
 
+
     //checks if hearts can be collected
     checkCollisionWithHearts() {
         this.level.hearts.forEach((heart) => {
@@ -112,6 +118,7 @@ class World {
             }
         });
     }
+
 
     /**
    * checks if enemy is colliding with character, if yes
@@ -139,6 +146,7 @@ class World {
         });
     }
 
+    
     // checks if coins can be collected
     checkCollisionWithCoins() {
         this.level.coins.forEach((coin) => {
@@ -151,6 +159,7 @@ class World {
             }
         });
     }
+
 
     // decreases status of healthbar of endboss
     decreaseHealthOfEndboss() {

@@ -55,6 +55,7 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    
     animate() {
         this.endbossIntervalWalking = setInterval(() => {
             this.makeEndbossMoveLeft();
@@ -66,6 +67,7 @@ class Endboss extends MovableObject {
 
         this.playIntroAnimation();
     }
+
 
     playIntroAnimation() {
         let i = 0;
@@ -82,6 +84,7 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+
     playAnimationAfterHit() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
@@ -91,6 +94,7 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_ALERT);
         }
     }
+
 
     makeEndbossMoveLeft() {
         if (this.isNear == true) {

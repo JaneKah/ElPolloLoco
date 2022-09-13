@@ -15,7 +15,6 @@ class Sounds {
     /**
      * Changes sounds volume
      */
-
     changeSoundsVolume() {
         if (world) {
             this.coin_sound.volume = 1;
@@ -30,5 +29,4 @@ class Sounds {
             this.world.character.hop_sound.volume = 0.5;
         }
     }
-
 }
