@@ -8,11 +8,9 @@ class Sounds {
     won_game_sound = new Audio('audio/wongame.mp3')
     smashed_bottle_sound = new Audio('audio/bottle_smash.mp3');
 
-
     constructor() {
         this.changeSoundsVolume();
     }
-
 
     /**
      * Changes sounds volume

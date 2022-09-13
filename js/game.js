@@ -9,7 +9,7 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     console.log('My character is', world.character)
-    
+
 }
 
 function removeIntroScreen() {
@@ -20,8 +20,8 @@ function removeIntroScreen() {
 function muteSound() {
     let sound = document.getElementById('volume');
     if (sound.src.match('volume')) {
-    sound.src = 'img/icons/mute.png';
-    world.muteSounds();
+        sound.src = 'img/icons/mute.png';
+        world.muteSounds();
     } else {
         sound.src = 'img/icons/volume.png';
         world.playSounds();

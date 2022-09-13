@@ -13,7 +13,6 @@ class ThrowableObject extends MovableObject {
     ]
     smashed_bottle_sound = new Audio('audio/bottle_smash.mp3');
 
-
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.BOTTLE_IMAGES);
@@ -28,32 +27,29 @@ class ThrowableObject extends MovableObject {
         * 
         * enables to throw a bottle
         */
-
-
     throw() {
         if (world) {
-
-            let turnedAround;
             this.speedY = 20;
             this.applyGravity();
-
-            if (world.character.otherDirection) {
-                turnedAround = true;
-            }
-
-            setInterval(() => {
-                if (this.isAboveGround()) {
-                    if (!turnedAround) {
-                        this.x += 10;
-                    } else {
-                        this.x -= 10;
-                    }
-                }
-            }, 1000 / 50);
+            this.changeDirectionOfThrow();
         }
     }
 
-
+    changeDirectionOfThrow() {
+        let turnedAround;
+        if (world.character.otherDirection) {
+            turnedAround = true;
+        }
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                if (!turnedAround) {
+                    this.x += 10;
+                } else {
+                    this.x -= 10;
+                }
+            }
+        }, 1000 / 50);
+    }
 
     animate() {
         setInterval(() => {

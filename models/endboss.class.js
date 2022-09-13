@@ -4,7 +4,6 @@ class Endboss extends MovableObject {
     width = 300;
     y = 60;
     isNear = false;
-
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -25,7 +24,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G22.png',
         'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
-
     IMAGES_ATTACK = [
         'img/4_enemie_boss_chicken/3_attack/G13.png',
         'img/4_enemie_boss_chicken/3_attack/G14.png',
@@ -37,7 +35,6 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/3_attack/G20.png'
 
     ];
-
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -60,21 +57,17 @@ class Endboss extends MovableObject {
 
     animate() {
         this.endbossIntervalWalking = setInterval(() => {
-            if (this.isNear == true) {
-                this.moveLeft();
-            }
+            this.makeEndbossMoveLeft();
         }, 1000 / 50);
 
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isNear == false && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
+            this.playAnimationAfterHit();
         }, 200);
 
+        this.playIntroAnimation();
+    }
+
+    playIntroAnimation() {
         let i = 0;
         setInterval(() => {
             if (this.isNear == true && !this.isHurt()) {
@@ -87,6 +80,21 @@ class Endboss extends MovableObject {
                 i++;
             }
         }, 200);
+    }
 
+    playAnimationAfterHit() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isNear == false && !this.isHurt()) {
+            this.playAnimation(this.IMAGES_ALERT);
+        }
+    }
+
+    makeEndbossMoveLeft() {
+        if (this.isNear == true) {
+            this.moveLeft();
+        }
     }
 }

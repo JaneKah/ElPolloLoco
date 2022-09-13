@@ -36,40 +36,40 @@
 
 <body>
     <div class="game-container">
-    <div class="intro" id="start-info-container">
-        <div class="start-info-container">
-            <h1>EL POLLO LOCO</h1>
-            <h2>INTRO</h2>
-            <p>Pepe "the dangerous" needs to rescue his hometown from attack of crazy chickens.
-                The Big Mama Chicken is their leader and need to be fought off. Help him to accomplish his task.
-            </p>
-            <button onclick="init()" class="start-button">START</button>
-            <div class="keys-panel">
-                <img src="img/icons/left_key.png" alt=""> move left
-                <img src="img/icons/right_key.png" alt=""> move right
-                <img src="img/icons/d_key.png" alt=""> throw bottle
-                <img src="img/icons/space.png" alt=""> jump
+        <div class="intro" id="start-info-container">
+            <div class="start-info-container">
+                <h1>EL POLLO LOCO</h1>
+                <h2>INTRO</h2>
+                <p>Pepe "the dangerous" needs to rescue his hometown from attack of crazy chickens.
+                    The Big Mama Chicken is their leader and need to be fought off. Help him to accomplish his task.
+                </p>
+                <button onclick="init()" class="start-button">START</button>
+                <div class="keys-panel">
+                    <img src="img/icons/left_key.png" alt=""> move left
+                    <img src="img/icons/right_key.png" alt=""> move right
+                    <img src="img/icons/d_key.png" alt=""> throw bottle
+                    <img src="img/icons/space.png" alt=""> jump
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="canvas-container" class="canvas-container d-none">
-        <div class="sound-panel">
-            <img onclick="muteSound()" id="volume" src="img/icons/volume.png" alt="">
-        </div>
-        <canvas id="canvas" width="720" height="480">        </canvas>
-        <div id="mobile-buttons-container" class="mobile-buttons-container d-none">
-            <div class="mobile-buttons-left">
-                <img src="img/icons/left_key.png" id="left">
-                    <img src="img/icons/right_key.png" id="right">
+        <div id="canvas-container" class="canvas-container d-none">
+            <div class="sound-panel">
+                <img onclick="muteSound()" id="volume" src="img/icons/volume.png" alt="">
             </div>
-            <div class="mobile-buttons-right">
-                <img src="img/icons/up_key.png" id="space">
+            <canvas id="canvas" width="720" height="480"> </canvas>
+            <div id="mobile-buttons-container" class="mobile-buttons-container d-none">
+                <div class="mobile-buttons-left">
+                    <img src="img/icons/left_key.png" id="left">
+                    <img src="img/icons/right_key.png" id="right">
+                </div>
+                <div class="mobile-buttons-right">
+                    <img src="img/icons/up_key.png" id="space">
                     <img src="img/icons/d_key.png" id="throw">
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 
 </html>

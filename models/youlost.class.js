@@ -1,4 +1,4 @@
-class YouLost extends MovableObject  {
+class YouLost extends MovableObject {
 
     width;
     height;
@@ -6,12 +6,11 @@ class YouLost extends MovableObject  {
     y;
     IMG_YOULOST = ['img/9_intro_outro_screens/game_over/oh no you lost!.png'];
 
-    constructor(){
+    constructor() {
         super().loadImage(this.IMG_YOULOST);
         this.width = 720;
         this.height = 480;
         this.x = 0;
         this.y = 0;
     }
-
 }

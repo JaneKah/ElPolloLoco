@@ -7,7 +7,6 @@ class EndbossBar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/80.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png',
     ];
-
     percentage = 100;
 
     constructor() {
@@ -42,5 +41,4 @@ class EndbossBar extends DrawableObject {
             return 0;
         }
     }
-
 }

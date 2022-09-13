@@ -19,8 +19,6 @@ class World {
     runInterval;
     gameIsOver = false;
 
-
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -31,21 +29,15 @@ class World {
         this.pushIntervalsToArray();
     }
 
-    /**
-        * 
-        *  sets the world of the character to this world
-        */
-
+    // sets the world of the character to this world
     setWorld() {
         this.character.world = this;
     }
 
     /**
-     * 
      * checks all collision of character with objects
      *  and enemies while running
      */
-
     run() {
         this.runInterval = setInterval(() => {
             this.checkCollisions();
@@ -57,11 +49,7 @@ class World {
         }, 200);
     }
 
-    /**
-     * 
-     * pushes all set intervals into an array
-     */
-
+    // pushes all set intervals into an array
     pushIntervalsToArray() {
         this.intervals.push(this.runInterval);
         this.intervals.push(this.character.characterMovingInterval);
@@ -76,12 +64,9 @@ class World {
     }
 
     /**
-   * 
    * checks if bottle is thrown, if yes, 
    * it decreases status of bottlebar
    */
-
-
     checkThrowObjects() {
         if (this.keyboard.D && this.character.bottlesStatus > 20) {
             this.sounds.smashed_bottle_sound.pause();
@@ -94,12 +79,7 @@ class World {
         }
     }
 
-
-    /**
-    * 
-    * calls out all functions of collisions
-    */
-
+    //calls out all functions of collisions
     checkCollisions() {
         this.checkCollisionWithEnemies();
         this.checkCollisionWithCoins();
@@ -107,11 +87,7 @@ class World {
         this.checkCollisionWithBottles();
     }
 
-    /**
-   * 
-   * checks if bottles can be collected
-   */
-
+    // checks if bottles can be collected
     checkCollisionWithBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -124,11 +100,7 @@ class World {
         });
     }
 
-    /**
-   * 
-   * checks if hearts can be collected
-   */
-
+    //checks if hearts can be collected
     checkCollisionWithHearts() {
         this.level.hearts.forEach((heart) => {
             if (this.character.isColliding(heart)) {
@@ -142,11 +114,9 @@ class World {
     }
 
     /**
-   * 
    * checks if enemy is colliding with character, if yes
    * it decreases the energy of the character
    */
-
     checkCollisionWithEnemies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !this.character.isAboveGround() && enemy.isAlive) {
@@ -157,11 +127,9 @@ class World {
     }
 
     /**
-   * 
    * checks if bottle collids with endboss, if yes,
    * it call the function out to decrease healthstatus of endboss
    */
-
     checkCollisionWithEndboss() {
         this.throwableObjects.forEach((object) => {
             if (this.endBoss.isColliding(object)) {
@@ -171,11 +139,7 @@ class World {
         });
     }
 
-    /**
-    * 
-    * checks if coins can be collected
-    */
-
+    // checks if coins can be collected
     checkCollisionWithCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -188,21 +152,13 @@ class World {
         });
     }
 
-    /**
- * 
- * decreases status of healthbar of endboss
- */
-
+    // decreases status of healthbar of endboss
     decreaseHealthOfEndboss() {
         this.endBoss.hit();
         this.endbossBar.setPercentage(this.endBoss.energy);
     }
 
-    /**
- * 
- * checks if endboss is near the character
- */
-
+    // checks if endboss is near the character
     checkIsEndbossNear() {
         if (this.character.x > 2000) {
             this.endBoss.isNear = true;
@@ -210,11 +166,9 @@ class World {
     }
 
     /**
-    * 
     * checks if chicken is hit by bottle or the character, if yes
     * it calls function out to kill enemy
     */
-
     checkChickenHit() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
             const bottle = this.throwableObjects[i];
@@ -253,11 +207,7 @@ class World {
         }
     }
 
-    /**
-   * 
-   * draws all the elements on the canvas
-   */
-
+    // draws all the elements on the canvas
     draw() {
         this.addMobileButtons();
 
@@ -285,13 +235,7 @@ class World {
         });
     }
 
-
-    /**
-   * 
-   * add status bars to the map
-   *
-   */
-
+    // add status bars to the map
     addStatusBars() {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
@@ -301,12 +245,7 @@ class World {
         }
     }
 
-    /**
-   * 
-   * adds mobile buttons when inner width of window is under 1000
-   *
-   */
-
+    //adds mobile buttons when inner width of window is under 1000
     addMobileButtons() {
         if (window.innerWidth < 1000) {
             document.getElementById('mobile-buttons-container').classList.remove('d-none');
@@ -315,14 +254,8 @@ class World {
         }
     }
 
-    /**
-    * 
-    * checks if game is over
-    *
-    */
-
+    //checks if game is over
     checkGameOver() {
-
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
             this.playLostGameSound();
@@ -339,7 +272,6 @@ class World {
     }
 
     // play sound when game is lost
-
     playLostGameSound() {
         if (!this.gameIsOver) {
             this.sounds.lost_game_sound.play();
@@ -347,41 +279,25 @@ class World {
     }
 
     // play sound when game is won
-
     playWonGameSound() {
         if (!this.gameIsOver) {
             this.sounds.won_game_sound.play();
         }
     }
 
-    /**
-        * 
-        * calls the function out to restart the game when there is onclick on canvas
-        *
-        */
-
+    // calls the function out to restart the game when there is onclick on canvas
     reloadIfGameOver() {
         if (this.gameIsOver == true) {
             document.getElementById('canvas').addEventListener("click", this.restartGame);
         }
     }
 
-    /**
-    * 
-    * reloads the page and comes back to intro
-    *
-    */
-
+    // reloads the page and comes back to intro
     restartGame() {
         location.reload();
     }
 
-    /**
-     * 
-     * clears all set intervals to stop the motion of all characters
-     *
-     */
-
+    // clears all set intervals to stop the motion of all characters
     clearAllIntervals() {
         for (let i = 0; i < this.intervals.length; i++) {
             clearInterval(this.intervals[i]);
@@ -393,7 +309,6 @@ class World {
      * adds each object of an array to the canvas
      * @param {Array} objects 
      */
-
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
@@ -405,7 +320,6 @@ class World {
     * adds a single object to the map
     * @param {object} mo 
     */
-
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -413,20 +327,14 @@ class World {
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
 
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
 
-    /**
-   * 
-   * adds all objects from level1.js on the canvas
-   * 
-   */
 
+    // adds all objects from level1.js on the canvas
     addDrawableObjectsToMap() {
-
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
@@ -452,19 +360,13 @@ class World {
   * flips the image to the right
   * @param {object} mo 
   */
-
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
-    /**
-    * 
-    * mute all sounds
-    */
-
+    // mute all sounds
     muteSounds() {
-
         this.sounds.heartbeat_sound.muted = true;
         this.sounds.bottle_clinking.muted = true;
         this.sounds.chicken_sound.muted = true;
@@ -476,16 +378,10 @@ class World {
         this.character.hurt_sound.muted = true;
         this.character.hop_sound.muted = true;
         this.sounds.smashed_bottle_sound.muted = true;
-
     }
 
-    /**
-    * 
-    * play all sounds
-    */
-
+    //play all sounds
     playSounds() {
-
         this.sounds.coin_sound.muted = false;
         this.sounds.heartbeat_sound.muted = false;
         this.sounds.bottle_clinking.muted = false;
@@ -498,7 +394,5 @@ class World {
         this.character.hurt_sound.muted = false;
         this.character.hop_sound.muted = false;
         this.sounds.smashed_bottle_sound.muted = false;
-
     }
-
 }
