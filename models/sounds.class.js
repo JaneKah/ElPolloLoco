@@ -24,9 +24,9 @@ class Sounds {
             this.endboss_sound.volume = 0.5;
             this.lost_game_sound.volume = 0.5;
             this.won_game_sound.volume = 0.5;
-            this.world.character.walking_sound.volume = 0.5;
-            this.world.character.hurt_sound.volume = 0.5;
-            this.world.character.hop_sound.volume = 0.5;
+            world.character.walking_sound.volume = 0.5;
+            world.character.hurt_sound.volume = 0.5;
+            world.character.hop_sound.volume = 0.5;
         }
     }
 }

@@ -44,7 +44,7 @@ class Character extends MovableObject {
     characterMovingInterval;
     characterAnimationInterval;
     level = level1;
-    walking_sound = new Audio('audio/running.mp3');
+    walking_sound = new Audio('audio/walking_sound.mp3');
     hurt_sound = new Audio('audio/hurt_sound.mp3');
     hop_sound = new Audio('audio/hop_sound.mp3');
 
