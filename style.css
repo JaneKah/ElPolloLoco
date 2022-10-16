@@ -131,6 +131,33 @@ h1 {
     height: 50px;
 }
 
+.restart-btn button{
+    padding: 16px 24px 16px 24px;
+    border-radius: 10px;
+    background-color: #FFC918;
+    border: #B6521C solid 3px;
+    color: #B6521C;
+    font-weight: 900;
+    font-size: 24px;
+    position: absolute;
+    bottom: 50px;
+}
+
+.restart-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.restart-btn button:hover {
+    background-color: rgb(251, 223, 130);
+    filter: brightness(1.1);
+    cursor: pointer;
+}
+
+.canvas-container {
+    position: relative;
+}
+
 @media(max-width: 420px) {
     .keys-panel {
         flex-direction: column;

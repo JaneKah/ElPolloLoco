@@ -267,12 +267,14 @@ class World {
     checkGameOver() {
         if (this.character.isDead()) {
             this.addToMap(this.youLost);
+            document.getElementById('restart-btn').classList.remove('d-none');
             this.playLostGameSound();
             this.clearAllIntervals();
             this.gameIsOver = true;
             this.reloadIfGameOver();
         } else if (this.endBoss.isDead()) {
             this.addToMap(this.gameOver);
+            document.getElementById('restart-btn').classList.remove('d-none');
             this.playWonGameSound();
             this.clearAllIntervals();
             this.gameIsOver = true;
@@ -298,6 +300,7 @@ class World {
     reloadIfGameOver() {
         if (this.gameIsOver == true) {
             document.getElementById('canvas').addEventListener("click", this.restartGame);
+            document.getElementById('restart-btn').addEventListener("click", this.restartGame);
         }
     }
 
